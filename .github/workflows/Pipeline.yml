@@ -1,1 +1,22 @@
-#
+name: Workflow
+on:
+  push: 
+    branches:
+        - feat
+
+jobs:
+  SAST:
+    runs-on: ubuntu-24.04
+    steps: 
+      - uses: actions/checkout@v3
+        with: 
+            fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: Sonarsource/sonarcloud-github-action@master
+        env:
+            GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}  
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
+        with:
+          args: >
+              -Dsonar.organization="laboratorio-nunez-reyes"
+              -Dsonar.projectKey="Laboratorio-Nunez-Reyes_Laboratorio-Devsecops"   
