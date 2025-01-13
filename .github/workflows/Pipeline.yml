@@ -73,3 +73,24 @@ jobs:
     - name: Push Docker
       run: |
         docker push emanuelnunezf/laboratorio-n-r:latest
+
+  DockerScan:
+    needs: DockerBuild
+    runs-on: ubuntu-24.04
+    steps:
+    
+    - name: Docker Login
+      uses: docker/login-action@v3.0.0
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Pull Docker
+      run: |
+        docker pull emanuelnunezf/laboratorio-n-r:latest
+
+    - name: Run Trivy Scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'emanuelnunezf/laboratorio-n-r:latest'
+        format: 'table'
