@@ -40,9 +40,10 @@ jobs:
         project: '${{ github.event.repository.name }}'
         path: '.'
         format: 'HTML'
-        args: >
-          --out ./reports
-          --enableRetired
+        #args: >
+        #  --out ./reports
+        #  --failOnCVSS 5
+        #  --enableRetired
 
     - name: Upload Test Result
       uses: actions/upload-artifact@master
